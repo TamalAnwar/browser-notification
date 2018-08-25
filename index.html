@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Notification Api</title>
+</head>
+
+<body>
+
+  <form id="form" action="/">
+    <input type="text" name="text">
+    <button>Click to Notify</button>
+  </form>
+
+
+  <script>
+    if (!('Notification' in window)) {
+      console.log("Your browser does not supports notifications.")
+    } else {
+      console.log("Your browser supports notification.")
+
+    }
+    function notify(e) {
+      e.preventDefault()
+      let value = e.target.text.value || "Hello world";
+      getPermission();
+      createNotification(value);
+      e.target.reset();
+    }
+
+    document.querySelector('#form').addEventListener('submit', notify)
+
+
+    function createNotification(msg) {
+      let icon = './img/node.jpg'
+      let body = "Hey how are you doing?"
+      let options = { body, icon }
+
+
+      const notify = new Notification(msg, options)
+    }
+
+    function getPermission() {
+      if (!(Notification.permission === "granted")) {
+
+
+        Notification.requestPermission((permission) => {
+          Notification.permission = permission;
+        }
+        )
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>
